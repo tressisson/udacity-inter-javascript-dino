@@ -1,6 +1,12 @@
 
     // Create Dino Constructor
-
+    class Dino {
+        constructor() {
+          this.name = 'Tres';
+        }
+      }
+      
+      const Dino1 = new Dino();
 
     // Create Dino Objects
 
