@@ -103,41 +103,65 @@
       }
     }
 
+    // Create human from Human Class
+    let newPerson;
+    let human = function() {
+      const name = document.getElementById('name').value;
+      const feet = document.getElementById('feet').value;
+      const inches = document.getElementById('inches').value;
+      const weight = document.getElementById('weight').value;
+      const diet = document.getElementById('diet').value.toLowerCase();
+      newPerson =  new Human(name, feet, inches, weight, diet);
+      return newPerson;
+    }
 
-    // Create Dino Objects
+    // Create Dino Objects using Dino Class
     let dinos;
-    let human;
     function makeDinos() {
         dinos = getData();
         dinos.forEach (function() {
             new Dinosaur(dinos.species, dinos.weight, dinos.height, dinos.diet, dinos.where, dinos.when, dinos.fact)
         });
     
-    // Create human (required to be an IIFE)
-        human = (function () {
-            const name = document.getElementById('name').value;
-            const feet = document.getElementById('feet').value;
-            const inches = document.getElementById('inches').value;
-            const weight = document.getElementById('weight').value;
-            const diet = document.getElementById('diet').value.toLowerCase();
-            return new Human(name, weight, diet);
-        })();
-    
     // Put the person in the middle of the grid no instead of as the tiles are being generated
-        dinos.splice(4, 0, human);
-        console.log(dinos);
+        dinos.splice(4, 0, newPerson);
     }
 
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
 
-    
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // create the big comparison function which compares weight, height, and diet
+    function comp(dinoWeight, dinoHeight, dinoDiet, humanWeight, humanFeet, humanInches, humanDiet) {
+      let message;
+      let message1, message2, message3;
+      let height = (parseInt(humanFeet) * 12) + parseInt(humanInches);
+ 
+      // Create Dino Compare Method 1 - Weight
+      if(dinoWeight > humanWeight) {
+        message1 = 'The dino weighs ' + dinoWeight + ' which is more than the human.<br/>';
+      } else if(dinoWeight < humanWeight) {
+        message1 = 'The dino weighs ' + dinoWeight + ' which is less than the human.<br/>';
+      } else {
+        message1 = 'The dino weighs ' + dinoWeight + ' which is equal to human.<br/>';
+      }
 
-    
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+      // Create Dino Compare Method 2 - Height
+      if(dinoHeight > height) {
+        message2 = 'The dino is ' + dinoHeight + ' inches which is taller than the human.<br/>';
+      } else if (dinoHeight < height) {
+        message2 = 'The dino is ' + dinoHeight + ' inches which is shorter than the human.<br/>';
+      } else {
+        message2 = 'The dino is ' + dinoHeight + ' inches which is equal to human.<br/>';
+      }
+
+      // Create Dino Compare Method 3 - Diet
+      if(dinoDiet === humanDiet) {
+        message3 = 'The dino and you are both a(n) ' + dinoDiet + '.<br/>';
+      } else {
+        message3 = 'The dino is an ' + dinoDiet + ' and you are an ' + humanDiet + '.<br/>';
+      }
+
+      message = message1 + '<br/>' + message2 + '<br/>' + message3;
+      return message;
+    }
 
 
     // Generate Tiles for each Dino in Array
@@ -148,12 +172,14 @@
           const div = document.createElement('div');
           div.classList.add('grid-item');
           
-          //build the info for the tile and put it in div
+          //create variables for items in the tile
           const name = document.createElement('h4');
-          
-          
           const image = document.createElement('img');
           const fact = document.createElement('p');
+          const compare = document.createElement('p');
+          const personWeight = "";
+          const personHeight = "";
+          const personDiet = "";
 
           // handle name vs species for human on name and image items
           if(i === 4){
@@ -165,23 +191,15 @@
           } else if(i === 8) { 
             name.innerHTML = dino.species;
             image.setAttribute('src', `/images/pigeon.png`); fact.innerHTML = "All birds are Dinosaurs.";
-            fact.innerHTML = "All birds are Dinosaurs.";
+            fact.innerHTML = 'All birds are Dinosaurs.' + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
 
           // keep going for regular dinosaurs
           } else {
             name.innerHTML = dino.species;
             image.setAttribute('src', `/images/${dino.species.toLowerCase()}.png`);
-            fact.innerHTML = dino.fact;
-            //fact.innerHTML = comparison(dino.species, human.species, dino.weight, human.weight, dino.diet, human.diet);
+            fact.innerHTML = dino.fact + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
           }
             
-            //fact.innerHTML = comparison(dino.species, human.species, dino.weight, human.weight, dino.diet, human.diet);
-          
-          
-          // change image and fact for human and bird
-          //if (i === 4) { image.setAttribute('src', `/images/human.png`); fact.innerHTML = " "; }
-          //if (i === 8) { image.setAttribute('src', `/images/pigeon.png`); fact.innerHTML = "All birds are Dinosaurs."; } 
-          
           // Add tile to DOM
           div.appendChild(name);
           div.appendChild(image);
@@ -191,10 +209,13 @@
   }
         
 
-    // Remove form from screen, create the dinos, the human, and append tiles to grid
+    // Remove form from screen, create the dinos, the human, do comparison, and append tiles to grid
     function changeIt() {
+      human();
       makeDinos();
       grid();
+
+      document.getElementById('dino-compare').remove();
     }
 
 // On button click, prepare and display infographic
