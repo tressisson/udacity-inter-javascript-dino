@@ -9,7 +9,9 @@
             "diet": "herbavor",
             "where": "North America",
             "when": "Late Cretaceous",
-            "fact": "First discovered in 1889 by Othniel Charles Marsh"
+            "fact0": "1-First discovered in 1889 by Othniel Charles Marsh",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Tyrannosaurus Rex",
@@ -18,7 +20,9 @@
             "diet": "carnivor",
             "where": "North America",
             "when": "Late Cretaceous",
-            "fact": "The largest known skull measures in at 5 feet long."
+            "fact0": "1-The largest known skull measures in at 5 feet long",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Anklyosaurus",
@@ -27,7 +31,9 @@
             "diet": "herbavor",
             "where": "North America",
             "when": "Late Cretaceous",
-            "fact": "Anklyosaurus survived for approximately 135 million years."
+            "fact0": "1-Anklyosaurus survived for approximately 135 million years",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Brachiosaurus",
@@ -36,7 +42,9 @@
             "diet": "herbavor",
             "where": "North America",
             "when": "Late Jurasic",
-            "fact": "An asteroid was named 9954 Brachiosaurus in 1991."
+            "fact0": "1-An asteroid was named 9954 Brachiosaurus in 1991",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Stegosaurus",
@@ -45,7 +53,9 @@
             "diet": "herbavor",
             "where": "North America, Europe, Asia",
             "when": "Late Jurasic to Early Cretaceous",
-            "fact": "The Stegosaurus had between 17 and 22 seperate places and flat spines."
+            "fact0": "1-The Stegosaurus had between 17 and 22 seperate places and flat spines",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Elasmosaurus",
@@ -54,7 +64,9 @@
             "diet": "carnivor",
             "where": "North America",
             "when": "Late Cretaceous",
-            "fact": "Elasmosaurus was a marine reptile first discovered in Kansas."
+            "fact0": "1-Elasmosaurus was a marine reptile first discovered in Kansas",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Pteranodon",
@@ -63,7 +75,9 @@
             "diet": "carnivor",
             "where": "North America",
             "when": "Late Cretaceous",
-            "fact": "Actually a flying reptile, the Pteranodon is not a dinosaur."
+            "fact0": "1-Actually a flying reptile, the Pteranodon is not a dinosaur",
+            "fact1": "2-Dinosaurs liked the shade and jungles",
+            "fact2": "3-Dinosaurs also lived in the ocean"
         },
         {
             "species": "Pigeon",
@@ -81,14 +95,16 @@
 
     // Create Dino Constructor
     class Dinosaur {
-      constructor(species, weight, height, diet, where, when, fact) {
+      constructor(species, weight, height, diet, where, when, fact0, fact1, fact2) {
         this.species = species;
         this.weight = weight;
         this.height = height;
         this.diet = diet;
         this.where = where;
         this.when = when;
-        this.fact = fact;
+        this.fact0 = fact0;
+        this.fact1 = fact1;
+        this.fact2= fact2;
       }
     }
 
@@ -120,7 +136,7 @@
     function makeDinos() {
         dinos = getData();
         dinos.forEach (function() {
-            new Dinosaur(dinos.species, dinos.weight, dinos.height, dinos.diet, dinos.where, dinos.when, dinos.fact)
+            new Dinosaur(dinos.species, dinos.weight, dinos.height, dinos.diet, dinos.where, dinos.when, dinos.fact0, dinos.fact1, dinos.fact2)
         });
     
     // Put the person in the middle of the grid no instead of as the tiles are being generated
@@ -163,6 +179,11 @@
       return message;
     }
 
+    // Random function for choosing the "facts" for dinosaurs
+    let randomFact = function() {
+       return Math.floor(Math.random() * 3);
+    };
+
 
     // Generate Tiles for each Dino in Array
     function grid() {
@@ -193,13 +214,23 @@
             image.setAttribute('src', `/images/pigeon.png`); fact.innerHTML = "All birds are Dinosaurs.";
             fact.innerHTML = 'All birds are Dinosaurs.' + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
 
-          // keep going for regular dinosaurs
+          // keep going for regular dinosaurs and choose RANDOM FACT
           } else {
             name.innerHTML = dino.species;
             image.setAttribute('src', `/images/${dino.species.toLowerCase()}.png`);
-            fact.innerHTML = dino.fact + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
+            switch (randomFact()) {
+              case 0:
+                fact.innerHTML = dino.fact0 + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
+                break;
+              case 1:
+                fact.innerHTML = dino.fact1 + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
+                break;
+                case 2:
+                fact.innerHTML = dino.fact2 + '<br/>' + comp(dino.weight, dino.height, dino.diet, newPerson.weight, newPerson.feet, newPerson.inches, newPerson.diet);
+                break;
+            }
           }
-            
+           
           // Add tile to DOM
           div.appendChild(name);
           div.appendChild(image);
