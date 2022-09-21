@@ -1,3 +1,4 @@
+const { Map } = require('immutable');
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -26,3 +27,5 @@ app.get('/apod', async (req, res) => {
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+//https://api.nasa.gov/planetary/apod?api_key=zq3ezZz32jtvD5fE4eF8iYkeY8oeIZ8vxh0E4QBw

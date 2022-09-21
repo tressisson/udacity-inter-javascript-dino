@@ -1,5 +1,5 @@
 let store = {
-    user: { name: "Student" },
+    user: { name: "William Sisson" },
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
 }
