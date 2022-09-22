@@ -1,23 +1,61 @@
+@import './resets.css';
+
 /* -------------------  MOBILE  --------------------- */
 
 body {
   display: flex;
   flex-direction: column;
-  font-family: Arial;
-  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 99vh;
 }
 
 header {
-  /* header styles */
+  text-align: center;
+  background-color: darkgray;
+  font-weight: bold;
+  padding: 1em;
+  color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
 main {
-  flex: 1;
-  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  padding: 25px 0;
+  background-color: lightgray;
 }
 
-footer {
-  /* footer styles */
+.tab-container{
+  margin-top: 70px;
+  display: flex;
+  background: white;
+  position: sticky;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.tab{
+  padding: 20px;
+  margin-bottom: 0;
+  width: 100%;
+  font-size: 0.8em;
+  background: lightslategray;
+  border: 1px;
+  border-color: black;
+}
+
+.tab.active {
+  background: lightslategray;
+}
+
+.tab:hover {
+    background: black;
+}
+
+.tab:active {
+  background: black;
 }
 
 /* -------------------  TABLET  --------------------- */
@@ -28,11 +66,14 @@ footer {
 /* -------------------  DESKTOP  -------------------- */
 
 @media (min-width: 1224px) {
-  /* use mobile */
-}
 
-/* -------------------  LARGE SCREENS  -------------- */
+  main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 0;
+    background-color: darkgray;
+  }
 
-@media (min-width: 1824px) {
-  /* use mobile */
+  body {background-color: lightblue;}
+
 }
